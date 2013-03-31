@@ -17,14 +17,74 @@
         <link rel="stylesheet" href="css/theme-dark.css">
         <link rel="stylesheet" href="css/modern-responsive.css">
         <!-- <link rel="stylesheet" href="css/main.css"> -->
+        <link rel="stylesheet" href="css/ringo-profile.css">
 
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <script src="js/jquery-1.8.2.min.js"></script>
         <script src="js/jquery.mousewheel.min.js"></script>
+        <script src="js/dropdown.js"></script>
         <script src="js/tile-slider.js"></script>
         <script src="js/start-menu.js"></script>
         <script src="js/tile-drag.js"></script>
-        <script src="js/main.js"></script>
+        <script type="text/javascript">
+        <!--
+        var scrollerVisible = false;
+
+        var anotherUser = true;
+
+        function getScrollerVisible() {
+            return scrollerVisible;
+        }
+
+        function setScrollerVisible(b) {
+            scrollerVisible = b;
+
+            if(!$("#username").hasClass('animated')) {
+                if(b)
+                    $("#date-scroller").fadeIn(250);
+                else
+                    $("#date-scroller").fadeOut(250);
+                $("#username").dequeue().stop().addClass('animated').animate({
+                    bottom: (b? $("#date-scroller ul > li").css("height") : 0)
+                }, 250, function() {
+                    $("#username").removeClass('animated');
+                    if(scrollerVisible)
+                        window.setTimeout("setScrollerVisible(false)", 2500);
+                });
+            }
+            
+            // TODO animate scroller when scrolled
+            
+            // TODO make scroller clickable/draggable to go to a specific date
+            
+            // TODO make animation start when scrolling is EXACTLY FINISHED
+            
+            // TODO overlay form/sidebar when square is clicked
+        }
+
+        $(document).ready(function() {
+            RinGo.attach("date-scroller", "content", true);
+            if(!anotherUser) {
+                $("#username").hide();
+                $("#date-scroller").css({
+                    fontSize: "250%",
+                    lineHeight: "1.0",
+                    padding: "40px"
+                });
+                $("#date-scroller > .year").css({
+                    fontSize: "150%"
+                });
+            }
+
+            $("#date-scroller").hide();
+        });
+
+        $(document).scroll(function() {
+            setScrollerVisible(true);
+        });
+        // -->
+        </script>
+        <script src="js/ringo-base.js"></script>
     </head>
     <body class="metrouicss">
         <!--[if lt IE 7]>
@@ -32,21 +92,36 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <div class="page fixed-header">
+        <div class="page secondary fixed-header">
         <div class="page-header">
             <div class="page-header-content">
-                <div class="user-login">
-                    <a href="#!"><div class="name">Settings</div></a>
-                    <a href="#!"><div class="name">Help</div></a>
-                    <a href="#!"><div class="name">Logout</div></a>
+                <div class="user-login" data-role="dropdown">
+                    <a>
+                        <div class="name">
+                            <span class="first-name">$User</span>
+                            <span class="last-name">$User</span>
+                        </div>
+                        <div class="avatar">
+                            <!--<img src="images/myface.jpg"/>-->
+                            <i class="icon-user fg-color-white"></i>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#!">Settings</a></li>
+                        <li><a href="#!">Help</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#!">Logout</a></li>
+                    </ul>
                 </div>
 
-                <h1 class="fg-color-white">$Username</h1>
+                <h1 id="username" class="fg-color-white">$Username</h1>
+                <div id="date-scroller" class="fg-color-white">
+                </div>
             </div>
         </div>
 
         <div class="page-region">
-        <div class="page-region-content tiles">
+        <div id="content" class="page-region-content tiles">
         <div class="tile-group tile-drag">
             <div class="tile icon">
                 <div class="tile-content">
@@ -371,7 +446,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.2.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+        <script src="js/ringo-base.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
